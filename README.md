@@ -1,0 +1,235 @@
+# geth-private-chain
+這是一個關於如何在自己的網絡上建立私有 ETH 鏈的教程。
+
+## 簡介
+要連上 Ethereum 就需要安裝 Ethereum Node，在這邊我們選擇使用 Golang 開發的 ETH 客戶端 Geth 來安裝 Ethereum Node。
+接下來就來一步一步的學學怎麼使用 Geth，甚至如何使用 Geth 來架設自己的 Ethereum Muti-Nodes 私有鏈。
+
+
+
+## 安裝 Geth
+- 使用 Homebrew 在 macOS 上安裝 Geth:
+```
+$ brew tap ethereum/ethereum
+$ brew install ethereum
+```
+- Window到官方網站下載 build 好的 Geth 執行檔:
+[下載](https://geth.ethereum.org/downloads/)
+
+- Ububtu 上使用以下指令安裝 Geth：
+```
+$ sudo apt-get install -y software-properties-common
+$ sudo add-apt-repository -y ppa:ethereum/ethereum
+$ sudo apt-get update
+$ sudo apt-get install -y ethereum
+```
+
+## 以太坊 Main Net
+
+理論上只要執行以下指令就會自動連上 chain id 為 1 的主網。
+```
+$ geth
+```
+這時候 Geth 開始同步帳本資料到你的虛擬機器了，並且會在你的本機資料夾上建立一些資料夾，.ipc 存存放連線資訊、keystore 儲存帳號資料， chaindata 資料夾下載了 Ethereum 帳本資料等。
+其實這樣你的機器就已經連上 Ethereum Network，並成為 Ethereum 中的一份子了，但等待 Main Net 完成同步需要花很久的時間...而且我們也沒有真的以太幣（主網上的）來互動。
+
+
+## 連上 Test Net 
+Test Net 有很多個，其中有一個 chain id 為 3 的網路叫做 “Ropsten。
+
+For testnets: use --ropsten, --rinkeby, --goerli instead (default: 1)
+
+- Ethereum mainnet
+    ```
+    $ geth --mainnet  
+    ```
+- Goerli network: pre-configured proof-of-authority test network
+    ```
+    $ geth --goerli
+    ```
+- Rinkeby network: pre-configured proof-of-authority test network
+    ```
+    $ geth --rinkeby  
+    ```
+- Ropsten network: pre-configured proof-of-work test network
+    ```
+    $ geth --ropsten 
+    ```
+
+## 刪除本機資料
+如果怕用完硬碟空間的話，可以把不用的帳本紀錄刪除，指令如下:
+```
+$ geth --testnet removedb // 刪除測試鏈資料
+$ geth removedb // 刪除主鏈資料
+```
+
+## 建立自己的 Private Net
+
+- 建立自己的 Private Net
+- 要建立自己的 Ethereum Private Net 其實很簡單，只要先定義好以下這兩項就能建立自己的 Private Net：
+
+Network id，決定自己的 network id 是什麼
+Genesis 檔案，決定自己的創世區塊初始帳本資料
+而當其他機器要連上這個 Private Net，就需要用一樣的 network id 及相同的 genesis 檔案（代表初始共識一致），如此就能夠連上這個 Private Net 了（一開始可能還需要提供其他 Peers 的位址給 geth 才能連上 Private Net）。
+
+## 創世區塊
+```
+// genesis18.json 
+{
+    "config": {
+        "chainId": 18,
+        "homesteadBlock": 0,
+        "eip150Block": 0,
+        "eip150Hash":"0x0000000000000000000000000000000000000000000000000000000000000000",
+        "eip155Block": 0,
+        "eip158Block": 0,
+        "byzantiumBlock": 0,
+        "constantinopleBlock": 0
+    },
+    "nonce": "0x0000000000009901",
+    "timestamp": "0x00",
+    "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "extraData": "0x00",
+    "gasLimit": "0x4c4b40",
+    "difficulty": "0x0400",
+    "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "coinbase": "0x0000000000000000000000000000000000000000",
+    "alloc": {
+    }
+}
+```
+這邊我設定了一個 id 為 18 的私有鏈，你可以設成任何想要的數字，但請避開主鏈及知名的測試鏈（基本上 1–10 盡量不要用，或是先查一下有沒有其他測試鏈佔用該網路ID);
+而 difficulty 則定義了 proof-of-work 的難度，這邊設成 0x400 其實就代表 1024，代表運算難度只有 1024，讓我們的 private chain 大約只要 10–15 秒就能產生一個區塊。
+
+需要建立的資料路徑如下：
+```
+- genesis18.json 
+- /.ethereum/net18/
+```
+
+這時候需要執行初始化指令（第一次需要而已）：
+
+```
+$ geth --datadir /.ethereum/net18 init genesis18.json
+```
+
+再來是每次要開啟鏈（ Node ）的指令：
+```
+geth --datadir /.ethereum/net18 --networkid 18 console
+```
+
+# 這裡是一些我已經寫好的腳本，但是Linux中才可直接使用
+
+The private-ethereum project contains a few utility scripts for running your private ethereum chain. Provided you have installed [geth](https://geth.ethereum.org/downloads/).
+
+The easy way of running a blockchain node on our private chain is by using the predefined scripts:
+```shell
+$ ./scripts/init.sh        # only the first time
+$ ./scripts/run.sh         # every time you wish to run a blockchain node
+$ ./scripts/reset.sh       # deletes your current chain and starts a new one
+```
+
+## 使用預先建立的錢包
+This repository comes with the following wallets that both have 500 Ether:
+
+1.  `42f072e76bdebc8f55a371565fee13d293c8696f` with password `""` (empty string)
+2.  `5ad91bf68720b9281824df87680c0db60ee843ef` with the password that is hardcoded as the default password in the stemapp project (see the WalletFactory class)
+
+Wallet 2 also has about 0.5 Ether on the Ropsten testnet at the moment of writing. If you need more, use [this faucet](http://ipfs.b9lab.com:8080/ipfs/QmTHdYEYiJPmbkcth3mQvEQQgEamFypLhc9zapsBatQW7Y/throttled_faucet.html).
+
+## Manually running geth
+To setup a private blockchain you need to initialize a blockchain with a new genesis block. This repository already contains such a block which can be modified to your requirements. 
+
+```shell
+$ geth --datadir data/ init genesis.json
+```
+
+`datadir` is used to determine the location where the blockchain data is stored. This directory can be used by your first blockchain node as its blockchain directory.
+
+### Starting an Ethereum Node
+
+```shell
+$ geth --datadir data/ --nodiscover --identity "mainNode" --networkid 9351 --rpcapi="eth, web3, personal" --rpc --rpcaddr "0.0.0.0" --rpccorsdomain "*"
+```
+
+Notice some additional flags:
+* `nodiscover` is used to keep other nodes from automatically connecting with your node (manual connection should be possible)
+* `identity` gives a pseudonym to your node so it is more easily recognizable (instead of using a long address)
+* `rpc` opens up the possibility to talk with this node. The additional RPC options let the node listen to RPC commands from any address (so be careful not to leave an account with real Ether unlocked!)
+* `networkid` refers to the id of your chain, which is defined in the genesis block. Were the default value '1' used, your Ethereum node would connect with the original ethereum blockchain. In the default genesis block, this id is set to '9351'.
+* `rpcapi` determines the visible API calls for this node (to be used by a DAPP).
+
+The easiest way to interact with your running geth node is to open a second terminal and run the `geth attach` command.
+
+
+
+## Geth Console 常用指令
+
+開啟 Geth Node 後直接打字會有一個類似 Javascript console。
+- 查看節點的全部帳號
+  ```
+  > eth.accounts
+  []
+  ```
+  理論上目前節點沒有帳號，應回傳空陣列。
+- 查看節點區塊數量
+  ```
+  > eth.blockNumber
+  0
+  ```
+  這表示此節點目前還沒開挖任何區塊，如果有連上其他已經開挖的鏈，區塊則會被同步。
+
+personal.newAccount("123456")
+
+
+## Private Chain 連結其他 Node
+現在架一個 Private Chain 對我們來說不是問題了，不過現在整個 Private Chain 只有一個 Node，怎麼與其他 Node 連結呢？
+另外一台現在也仿造之前的步驟裝好環境，使用相同的 Genesis.json（一定要一模一樣，例如：18）檔案建立、開啟 Private Chain，並建立好一個帳號，然後先不要進行挖礦。
+
+
+當前我們兩個 Node 是分開的，並不知道彼此的存在：
+```
+Node A > admin.peers
+[]
+
+Node B > admin.peers
+[]
+```
+
+想要把 B node（未開挖，無交易紀錄）連上 A node（已開挖，有交易紀錄）：
+
+執行以下指令，得到 A node 的位址。
+```
+Node A > admin.nodeInfo.enode
+```
+
+以我在 Linode 的節點位置為例：
+"enode://dbd5e2bb32a71901cb25abf8a0254bfcb3236831785553cf8607fc5479144021dffce5d0c17edee78bb66c3c852a1b605d5616092914cb4b9c0f4797ca892735@66.228.52.222:30303"
+
+只要你的創世區塊，鏈 id 和 網路 id 與我的一樣，並且執行：
+```
+admin.addPeer("enode://dbd5e2bb32a71901cb25abf8a0254bfcb3236831785553cf8607fc5479144021dffce5d0c17edee78bb66c3c852a1b605d5616092914cb4b9c0f4797ca892735@66.228.52.222:30303")
+```
+應該就會連上我們的 18 私鏈了！
+
+這時候再執行查看區塊數的指令，應該就會看到最新已挖到的區塊數（例如：171）
+```
+> eth.blockNumber
+171
+```
+
+
+## 使用網頁錢包
+
+當然你也可以不設置節點，僅透過 MetaMask 錢包（瀏覽器外掛，無法挖礦)，
+從切換網路的下拉選單，選擇我們的私鏈網 18，方法為自訂 RPC:
+```
+網路名稱 隨意
+新的 PRC URL 填入我 expose 的 http://66.228.52.222:8545/
+鏈 id 填入 18
+```
+
+就可以查看帳號(錢包地址)餘額或進行轉帳交易等，
+寫入鏈上區塊需要支付少許 Gas 作為給礦工的手續費。
+當然如果進行了交易，就需要有礦工幫忙計算和驗證..資料才會打包上鏈，否則會一直 Pending 該筆交易。
+
