@@ -1,0 +1,1 @@
+geth --datadir .\nodedata0 init first.json
