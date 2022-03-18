@@ -110,7 +110,7 @@ Genesis 檔案，決定自己的創世區塊初始帳本資料
 這時候需要執行初始化指令（第一次需要而已）：
 
 ```
-$ geth --datadir /nodedata0 init genesis18.json
+$ geth --datadir .\nodedata0 init genesis18.json
 ```
 
 再來是每次要開啟鏈（ Node ）的指令：
