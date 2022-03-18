@@ -117,6 +117,10 @@ $ geth --datadir /.ethereum/net18 init genesis18.json
 ```
 geth --datadir /.ethereum/net18 --networkid 18 console
 ```
+or
+```
+geth --networkid 18 --rpc --rpcaddr "0.0.0.0" --rpcport "8549" --rpcapi "web3,net,eth,admin,personal" --rpccorsdomain "*" --datadir nodedata0 --ipcdisable --allow-insecure-unlock --rpc.allow-unprotected-txs --nodiscover console
+```
 
 # 這裡是一些我已經寫好的腳本，但是Linux中才可直接使用
 
