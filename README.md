@@ -162,7 +162,7 @@ $ geth --datadir data/ --nodiscover --identity "mainNode" --networkid 9351 --rpc
 與正在運行的 geth 節點交互的最簡單方法是打開第二個終端並運行 `geth attach` 命令。
 
 
-## Geth Console 常用指令
+# Geth Console 常用指令
 
 開啟 Geth Node 後直接打字會有一個類似 Javascript console。
 - 查看節點的全部帳號
@@ -181,7 +181,7 @@ $ geth --datadir data/ --nodiscover --identity "mainNode" --networkid 9351 --rpc
 personal.newAccount("123456")
 
 
-## Private Chain 連結其他 Node
+# Private Chain 連結其他 Node
 現在架一個 Private Chain 對我們來說不是問題了，不過現在整個 Private Chain 只有一個 Node，怎麼與其他 Node 連結呢？
 另外一台現在也仿造之前的步驟裝好環境，使用相同的 Genesis.json（一定要一模一樣，例如：18）檔案建立、開啟 Private Chain，並建立好一個帳號，然後先不要進行挖礦。
 
