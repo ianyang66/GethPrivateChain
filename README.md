@@ -1,5 +1,5 @@
 # geth-private-chain
-這是一個關於如何在自己的網絡上建立私有 ETH 鏈的教程。
+這是一個關於如何在自己的網路上建立私有 ETH 鏈的教學。
 
 ## 簡介
 要連上 Ethereum 就需要安裝 Ethereum Node，在這邊我們選擇使用 Golang 開發的 ETH 客戶端 Geth 來安裝 Ethereum Node。
@@ -120,9 +120,9 @@ geth --datadir /.ethereum/net18 --networkid 18 console
 
 # 這裡是一些我已經寫好的腳本，但是Linux中才可直接使用
 
-The private-ethereum project contains a few utility scripts for running your private ethereum chain. Provided you have installed [geth](https://geth.ethereum.org/downloads/).
+私有以太坊項目包含一些用於運行私有以太坊鏈的實用程序腳本。前提是你已經安裝 [geth](https://geth.ethereum.org/downloads/).
 
-The easy way of running a blockchain node on our private chain is by using the predefined scripts:
+在我們的私有鏈上運行區塊鏈節點的簡單方法是使用預定義的腳本:
 ```shell
 $ ./scripts/init.sh        # only the first time
 $ ./scripts/run.sh         # every time you wish to run a blockchain node
@@ -130,37 +130,36 @@ $ ./scripts/reset.sh       # deletes your current chain and starts a new one
 ```
 
 ## 使用預先建立的錢包
-This repository comes with the following wallets that both have 500 Ether:
+此存儲庫附帶以下錢包，它們都有 500 以太幣:
 
 1.  `42f072e76bdebc8f55a371565fee13d293c8696f` with password `""` (empty string)
 2.  `5ad91bf68720b9281824df87680c0db60ee843ef` with the password that is hardcoded as the default password in the stemapp project (see the WalletFactory class)
 
-Wallet 2 also has about 0.5 Ether on the Ropsten testnet at the moment of writing. If you need more, use [this faucet](http://ipfs.b9lab.com:8080/ipfs/QmTHdYEYiJPmbkcth3mQvEQQgEamFypLhc9zapsBatQW7Y/throttled_faucet.html).
+在撰寫本文時，錢包 2 在 Ropsten 測試網上也有大約 0.5 個以太幣。如果您需要更多，請使用 [水龍頭](http://ipfs.b9lab.com:8080/ipfs/QmTHdYEYiJPmbkcth3mQvEQQgEamFypLhc9zapsBatQW7Y/throttled_faucet.html).
 
-## Manually running geth
-To setup a private blockchain you need to initialize a blockchain with a new genesis block. This repository already contains such a block which can be modified to your requirements. 
+## 手動運行 geth
+要設置私有區塊鏈，您需要使用新的創世塊初始化區塊鏈。該存儲庫已經包含這樣一個塊，可以根據您的要求進行修改。 
 
 ```shell
 $ geth --datadir data/ init genesis.json
 ```
 
-`datadir` is used to determine the location where the blockchain data is stored. This directory can be used by your first blockchain node as its blockchain directory.
+`datadir` 用於確定區塊鏈數據的儲存位置。這個目錄可以被你的第一個區塊鏈節點用作它的區塊鏈目錄。
 
-### Starting an Ethereum Node
+### 啟動以太坊節點
 
 ```shell
 $ geth --datadir data/ --nodiscover --identity "mainNode" --networkid 9351 --rpcapi="eth, web3, personal" --rpc --rpcaddr "0.0.0.0" --rpccorsdomain "*"
 ```
 
-Notice some additional flags:
-* `nodiscover` is used to keep other nodes from automatically connecting with your node (manual connection should be possible)
-* `identity` gives a pseudonym to your node so it is more easily recognizable (instead of using a long address)
-* `rpc` opens up the possibility to talk with this node. The additional RPC options let the node listen to RPC commands from any address (so be careful not to leave an account with real Ether unlocked!)
-* `networkid` refers to the id of your chain, which is defined in the genesis block. Were the default value '1' used, your Ethereum node would connect with the original ethereum blockchain. In the default genesis block, this id is set to '9351'.
-* `rpcapi` determines the visible API calls for this node (to be used by a DAPP).
+注意一些額外的Flag：
+* `nodiscover` 用於防止其他節點自動連接到您的節點（應該可以手動連接）
+* `identity` 為您的節點提供了一個假名，因此更容易識別（而不是使用長地址）
+* `rpc` 開啟了與該節點對話的可能性。額外的 RPC 選項讓節點可以監聽來自任何地址的 RPC 命令（所以請注意不要讓真實 Ether 的帳戶處於未鎖定狀態！）
+* `networkid` 是指你的鏈的 id，它在創世塊中定義。如果使用默認值“1”，您的以太坊節點將與原始以太坊區塊鏈連接。在默認的創世區塊中，此 id 設置為“9351”。
+* `rpcapi` 確定此節點的可見 API 調用（由 DAPP 使用）。
 
-The easiest way to interact with your running geth node is to open a second terminal and run the `geth attach` command.
-
+與正在運行的 geth 節點交互的最簡單方法是打開第二個終端並運行 `geth attach` 命令。
 
 
 ## Geth Console 常用指令
@@ -203,10 +202,10 @@ Node B > admin.peers
 Node A > admin.nodeInfo.enode
 ```
 
-以我在 Linode 的節點位置為例：
+以我的節點位置為例：
 "enode://dbd5e2bb32a71901cb25abf8a0254bfcb3236831785553cf8607fc5479144021dffce5d0c17edee78bb66c3c852a1b605d5616092914cb4b9c0f4797ca892735@66.228.52.222:30303"
 
-只要你的創世區塊，鏈 id 和 網路 id 與我的一樣，並且執行：
+只要你的創世區塊，鏈 id 和 網路 id 與我的一樣(你的節點應該不會跟我一樣，所以必須做修改)，並且執行：
 ```
 admin.addPeer("enode://dbd5e2bb32a71901cb25abf8a0254bfcb3236831785553cf8607fc5479144021dffce5d0c17edee78bb66c3c852a1b605d5616092914cb4b9c0f4797ca892735@66.228.52.222:30303")
 ```
