@@ -154,14 +154,14 @@ $ geth --datadir data/ init genesis.json
 ### 啟動以太坊節點
 
 ```shell
-$ geth --datadir data/ --nodiscover --identity "mainNode" --networkid 9351 --rpcapi="eth, web3, personal" --rpc --rpcaddr "0.0.0.0" --rpccorsdomain "*"
+$ geth --datadir data/ --nodiscover --identity "mainNode" --networkid 18 --rpcapi="eth, web3, personal" --rpc --rpcaddr "0.0.0.0" --rpccorsdomain "*"
 ```
 
 注意一些額外的Flag：
 * `nodiscover` 用於防止其他節點自動連接到您的節點（應該可以手動連接）
 * `identity` 為您的節點提供了一個假名，因此更容易識別（而不是使用長地址）
 * `rpc` 開啟了與該節點對話的可能性。額外的 RPC 選項讓節點可以監聽來自任何地址的 RPC 命令（所以請注意不要讓真實 Ether 的帳戶處於未鎖定狀態！）
-* `networkid` 是指你的鏈的 id，它在創世塊中定義。如果使用默認值“1”，您的以太坊節點將與原始以太坊區塊鏈連接。在默認的創世區塊中，此 id 設置為“9351”。
+* `networkid` 是指你的鏈的 id，它在創世塊中定義。如果使用默認值“1”，您的以太坊節點將與原始以太坊區塊鏈連接。在默認的創世區塊中，此 id 設置為“18”。
 * `rpcapi` 確定此節點的可見 API 調用（由 DAPP 使用）。
 
 與正在運行的 geth 節點交互的最簡單方法是打開第二個終端並運行 `geth attach` 命令。
