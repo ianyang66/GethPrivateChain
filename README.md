@@ -1,4 +1,4 @@
-# geth-private-chain
+# Geth-Private-Chain
 這是一個關於如何在自己的網路上建立私有 ETH 鏈的教學。
 
 ## 簡介
@@ -104,13 +104,14 @@ Genesis 檔案，決定自己的創世區塊初始帳本資料
 需要建立的資料路徑如下：
 ```
 - genesis18.json 
-- /.ethereum/net18/
+- /nodedata0
+- /nodedata1
 ```
 
 這時候需要執行初始化指令（第一次需要而已）：
 
 ```
-$ geth --datadir /nodedata0 init genesis18.json
+$ geth --datadir .\nodedata0 init genesis18.json
 ```
 
 再來是每次要開啟鏈（ Node ）的指令：
@@ -181,9 +182,10 @@ $ geth --datadir data/ --nodiscover --identity "mainNode" --networkid 9351 --rpc
   0
   ```
   這表示此節點目前還沒開挖任何區塊，如果有連上其他已經開挖的鏈，區塊則會被同步。
-
-personal.newAccount("123456")
-
+- 建立新帳號
+  ```
+  > personal.newAccount("123456")
+  ```
 
 # Private Chain 連結其他 Node
 現在架一個 Private Chain 對我們來說不是問題了，不過現在整個 Private Chain 只有一個 Node，怎麼與其他 Node 連結呢？
@@ -197,6 +199,10 @@ Node A > admin.peers
 
 Node B > admin.peers
 []
+```
+查看節點數量
+```
+net.peerCount
 ```
 
 想要把 B node（未開挖，無交易紀錄）連上 A node（已開挖，有交易紀錄）：
@@ -220,19 +226,3 @@ admin.addPeer("enode://dbd5e2bb32a71901cb25abf8a0254bfcb3236831785553cf8607fc547
 > eth.blockNumber
 171
 ```
-
-
-## 使用網頁錢包
-
-當然你也可以不設置節點，僅透過 MetaMask 錢包（瀏覽器外掛，無法挖礦)，
-從切換網路的下拉選單，選擇我們的私鏈網 18，方法為自訂 RPC:
-```
-網路名稱 隨意
-新的 PRC URL 填入我 expose 的 http://66.228.52.222:8545/
-鏈 id 填入 18
-```
-
-就可以查看帳號(錢包地址)餘額或進行轉帳交易等，
-寫入鏈上區塊需要支付少許 Gas 作為給礦工的手續費。
-當然如果進行了交易，就需要有礦工幫忙計算和驗證..資料才會打包上鏈，否則會一直 Pending 該筆交易。
-
