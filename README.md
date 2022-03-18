@@ -1,4 +1,4 @@
-# geth-private-chain
+# Geth-Private-Chain
 這是一個關於如何在自己的網路上建立私有 ETH 鏈的教學。
 
 ## 簡介
