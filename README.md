@@ -104,7 +104,8 @@ Genesis 檔案，決定自己的創世區塊初始帳本資料
 需要建立的資料路徑如下：
 ```
 - genesis18.json 
-- /.ethereum/net18/
+- /nodedata0
+- /nodedata1
 ```
 
 這時候需要執行初始化指令（第一次需要而已）：
