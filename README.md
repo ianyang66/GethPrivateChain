@@ -182,9 +182,10 @@ $ geth --datadir data/ --nodiscover --identity "mainNode" --networkid 9351 --rpc
   0
   ```
   這表示此節點目前還沒開挖任何區塊，如果有連上其他已經開挖的鏈，區塊則會被同步。
-
-personal.newAccount("123456")
-
+- 建立新帳號
+  ```
+  > personal.newAccount("123456")
+  ```
 
 # Private Chain 連結其他 Node
 現在架一個 Private Chain 對我們來說不是問題了，不過現在整個 Private Chain 只有一個 Node，怎麼與其他 Node 連結呢？
