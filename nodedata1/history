@@ -1,0 +1,22 @@
+
+admin.peers
+net.peerCount
+admin.nodeInfo.enode
+admin.addPeer("enode://8f25e94d4694ce3f515d7c740ec8e170443f8e6d5083f86b82ed8b0aceaa48105d2c6127a4d90ed7f8496876b58f0c1ac4ccd1308c8fad75717073f6817d933f@192.168.8.100:30303?discport=0")
+net.peerCount
+eth.sendTransaction
+({
+from:eth.coinbase //從什麼帳戶位址
+,to:0x041d03e989897e78c392687a02c75aaa232083cc//從什麼帳戶位址，假如要部署合約可以忽略
+,value:80000//多少 wei 要傳
+});
+eth.getBalance(eth.coinbase)
+miner.start
+miner.start()
+miner.stop()
+eth.getBalance(eth.coinbase)
+eth.blockNumber
+miner.start()
+miner.stop()
+eth.getBalance(eth.coinbase)
+eth.coinbase

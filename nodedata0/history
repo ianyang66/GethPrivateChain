@@ -1,0 +1,17 @@
+eth.accounts
+eth.blockNumber
+admin.addPeer("enode://619ad4ee2df3a54728b1940557f53d27bb117a28c1f270cfc04154381fb497a0b81057bcb2851880013bfc3d6ee9e28600709332c6128f080c13f23b64cc786e@192.168.8.100:30304?discport=0")
+net.peerCount
+admin.nodeInfoenode
+admin.nodeInfo.enode
+eth.blockNumber
+eth.coinbase
+miner.start()
+miner.stop()
+eth.getBalance(0x041d03e989897e78c392687a02c75aaa232083cc)
+eth.getBalance("0x041d03e989897e78c392687a02c75aaa232083cc")
+miner.start()
+miner.stop()
+eth.getBalance("0x041d03e989897e78c392687a02c75aaa232083cc")
+eth.blockNumber
+eth.getBalance("0x041d03e989897e78c392687a02c75aaa232083cc")

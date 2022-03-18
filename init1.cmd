@@ -1,0 +1,1 @@
+geth --datadir .\nodedata1 init genesis18.json
