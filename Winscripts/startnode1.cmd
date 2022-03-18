@@ -1,0 +1,1 @@
+geth --rpc --rpcport 8550 --nodiscover --datadir  "./nodedata1"  --port 30304 --rpcapi "db,eth,net,web3" --rpccorsdomain "*" --networkid 15 --ipcdisable --allow-insecure-unlock --rpc.allow-unprotected-txs --nodiscover console
