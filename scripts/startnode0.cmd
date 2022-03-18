@@ -1,0 +1,1 @@
+geth --networkid 15 --rpc --rpcaddr "0.0.0.0" --rpcport "8549" --rpcapi "web3,net,eth,admin,personal" --rpccorsdomain "*" --datadir nodedata0 --ipcdisable --allow-insecure-unlock --rpc.allow-unprotected-txs --nodiscover console
