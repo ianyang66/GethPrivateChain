@@ -226,3 +226,23 @@ admin.addPeer("enode://dbd5e2bb32a71901cb25abf8a0254bfcb3236831785553cf8607fc547
 > eth.blockNumber
 171
 ```
+
+解鎖另一個有錢的帳號
+```
+> personal.unlockAccount("0x42f072e76bdebc8f55a371565fee13d293c8696f","")
+
+```
+
+進行交易
+```
+> eth.sendTransaction
+({
+	from: 		//從什麼帳戶位址
+	,to:		//從什麼帳戶位址，假如要部署合約可以忽略
+	,gas:		//多少 wei，預設 90000 沒用完的會退回來 
+	,gasPrice:	//多少 gas，gas 單價，Enode設定
+	,value:		//多少 wei 要傳 	
+	,data: 		//附加資料：部署合約或呼叫合約，或也可以儲存資料，最大值為 89kb 
+	,nonce:		//用於標示 Transaction 的順序，所以可以以相同的 nonce 覆蓋同 nonce 的交易
+});
+```
